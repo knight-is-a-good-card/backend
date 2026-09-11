@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunicação Java + JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #003e4e;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00A8E8;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+        }
+        button {
+            background-color: #00A8E8;
+            color: #00204E;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #deff9a;
+        }
+        #mensagem {
+            color: #deff9a;
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Conexão Front + Back</h2>
+        <p>Clique no botão para o JavaScript buscar o dado no Java:</p>
+        
+        <button id="btnBuscar">Buscar Dados</button>
+        
+        <div id="mensagem">Aguardando clique...</div>
+    </div>
+
+
+    
+</body>
+</html>
