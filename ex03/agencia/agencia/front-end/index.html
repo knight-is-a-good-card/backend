@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Agências</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            margin: auto;
+            background-color: rgb(216, 233, 227);
+        };
+
+        body {
+            display: flex;
+            background-color: aquamarine;
+            align-items: center;
+        }
+
+        div {
+            color: black;
+            margin-top: 30px;
+            width: 300px;
+            margin-left: 40px;
+        }
+
+        button {
+            margin-top: auto;
+            color: rgb(255, 255, 255);
+            background-color: rgb(145, 173, 224);
+            margin-top: 6px;
+            margin-left: 4px;
+            font-size: 14px;
+        };
+
+        .container {
+            margin-top: 20px;
+            background-color: blue;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;border-radius: 30px;
+            box-shadow: black;
+        }
+
+        input {
+            padding: 5px;
+        }
+
+        
+    </style>
+    
+</head>
+<body>
+    <form method="GET">
+        <input type="text" name="agencia" placeholder="CIA, MOSSAD ou ABIN">
+        <button type="submit">Buscar</button>
+    </form>
+    <form id="form-id">
+        <input type="number" name="id" placeholder="id do espião">
+        <button type="submit">Buscar por id</button>
+    </form>
+
+    <p id="resultado"></p>
+
+    <script>
+        const form = document.querySelector('form');
+        const resultado = document.querySelector('#resultado');
+        
+        
+
+        async function buscar(event) {
+            event.preventDefault();
+
+            const agencia = form.agencia.value;
+            const resposta = await fetch(
+                `http://localhost:8080/espioes?agencia=${encodeURIComponent(agencia)}`
+            );
+
+            if (!resposta.ok) {
+                resultado.textContent = 'Agência não encontrada.';
+                return;
+            }
+
+            const espioes = await resposta.json();
+
+            if (espioes.length === 0) {
+                resultado.textContent = 'Nenhum espião nessa agência.';
+                return;
+            }
+
+            let texto = '';
+            for (const espiao of espioes) {
+                texto += `${espiao.nomeEspiao} (${espiao.nomeReal}): ${espiao.descricao}\n`;
+            }
+            resultado.textContent = texto;
+        }
+
+        form.addEventListener('submit', buscar);
+        const formId = document.querySelector('#form-id');
+        
+        // Segunda consulta
+        async function buscarPorId(event) {
+            event.preventDefault();
+
+            const id = formId.id.value;
+            const resposta = await fetch(
+                `http://localhost:8080/espioes/resumo?id=${encodeURIComponent(id)}`
+            );
+
+            if (!resposta.ok) {
+                resultado.textContent = 'Espião não encontrado.';
+                return;
+            }
+
+            resultado.textContent = await resposta.text();
+        }
+
+        formId.addEventListener('submit', buscarPorId);
+    </script>
+</body>
+</html>
